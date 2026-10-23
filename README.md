@@ -142,26 +142,47 @@ python run_evaluation.py
 
 ---
 
-## 📸 Screenshots
+## 📸 Screenshots & Question-Answer Demonstrations
 
-### Streamlit Web App Interface
-*(Run `streamlit run app.py` to view the UI and capture screenshots for submission)*
+Below are the visual execution screenshots of the Streamlit Web Application answering each of the 5 examination questions, demonstrating factual grounding, citations, and "Not found" enforcement:
 
-1. **Question 1: Privilege Leave (PL) Entitlement**
-   - Query: *How many days of Privilege Leave (PL) does a permanent employee get per year?*
-   - Answer: **12 days** (Reference: Annexure III - Leave Policy, Page 60).
-2. **Question 2: Probation Period**
-   - Query: *What is the probation period for employees up to Senior Manager?*
-   - Answer: **3 months** (Reference: Annexure I - Probation Policy, Page 42).
-3. **Question 3: Health-Insurance Premium Amount**
-   - Query: *What is the company's health-insurance premium amount?*
-   - Status: **Not found in the Enso Group HR Policy Manual.**
-4. **Question 4: Current GST Rate in India**
-   - Query: *What is the current GST rate in India?*
-   - Status: **Not found in the Enso Group HR Policy Manual.**
-5. **Question 5: Maternity Leave Entitlement**
-   - Query: *How many days of maternity leave are given?*
-   - Answer: **12 weeks (90 days)** with pay (Reference: Annexure III - Leave Policy, Page 62).
+### 1. Question 1: Privilege Leave (PL) Entitlement
+> **Query:** *How many days of Privilege Leave (PL) does a permanent employee get per year?*  
+> **Output:** **12 days** (Reference: Annexure III - Leave Policy, Page 60).
+
+![Question 1 - Privilege Leave](screenshots/q1_privilege_leave.png)
+
+---
+
+### 2. Question 2: Probation Period for Senior Managers
+> **Query:** *What is the probation period for employees up to Senior Manager?*  
+> **Output:** **3 months** (Reference: Annexure I - Probation Policy, Page 42).
+
+![Question 2 - Probation Period](screenshots/q2_probation_period.png)
+
+---
+
+### 3. Question 3: Health-Insurance Premium Amount (Negative Test)
+> **Query:** *What is the company's health-insurance premium amount?*  
+> **Output:** **Not found.** (Correctly identifies absence of information in manual).
+
+![Question 3 - Health Insurance Premium](screenshots/q3_health_insurance.png)
+
+---
+
+### 4. Question 4: Current GST Rate in India (Out-of-Scope Test)
+> **Query:** *What is the current GST rate in India?*  
+> **Output:** **Not found.** (Strict grounding prevents hallucinating external facts).
+
+![Question 4 - Current GST Rate](screenshots/q4_gst_rate.png)
+
+---
+
+### 5. Question 5: Maternity Leave Entitlement
+> **Query:** *How many days of maternity leave are given?*  
+> **Output:** **12 weeks (90 days)** with pay (Reference: Annexure III - Leave Policy, Page 62).
+
+![Question 5 - Maternity Leave](screenshots/q5_maternity_leave.png)
 
 ---
 
