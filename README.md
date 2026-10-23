@@ -86,8 +86,8 @@ Here are the verified answers for the 5 assignment questions tested through the 
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/your-username/HR-Policy-Assistant.git
-cd HR-Policy-Assistant
+git clone https://github.com/anjalimishra-0007/GEN-AI-Exam-HR-Policy-Assistant.git
+cd GEN-AI-Exam-HR-Policy-Assistant
 ```
 
 ### 2. Create and Activate Virtual Environment
