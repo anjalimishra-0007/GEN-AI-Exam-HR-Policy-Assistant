@@ -54,11 +54,15 @@ class HRPolicyAssistant:
             search_type="similarity",
             search_kwargs={"k": k}
         )
-        self.llm = ChatGoogleGenerativeAI(
-            model=MODEL_NAME,
-            google_api_key=API_KEY,
-            temperature=0.0
-        )
+        self.models_to_try = [
+            MODEL_NAME,
+            "gemini-3.5-flash",
+            "gemini-3.7-flash",
+            "gemini-flash-latest",
+            "gemini-3.1-flash-lite"
+        ]
+        # Remove duplicates while preserving order
+        self.models_to_try = list(dict.fromkeys(self.models_to_try))
         self.prompt = PromptTemplate(
             template=RAG_PROMPT_TEMPLATE,
             input_variables=["context", "question"]
@@ -104,7 +108,25 @@ class HRPolicyAssistant:
         context_str = self._format_context(docs)
 
         prompt_val = self.prompt.format(context=context_str, question=question)
-        raw_response = self.llm.invoke(prompt_val)
+        raw_response = None
+        last_err = None
+
+        for model_cand in self.models_to_try:
+            try:
+                llm = ChatGoogleGenerativeAI(
+                    model=model_cand,
+                    google_api_key=API_KEY,
+                    temperature=0.0
+                )
+                raw_response = llm.invoke(prompt_val)
+                break
+            except Exception as e:
+                last_err = e
+                continue
+
+        if raw_response is None:
+            raise RuntimeError(f"All Gemini models failed. Last error: {last_err}")
+
         answer = self._extract_text(raw_response)
 
         # Enforce exact requirement: If answer is not supported, return exactly 'Not found.'
@@ -118,7 +140,8 @@ class HRPolicyAssistant:
             sources.append({
                 "page": d.metadata.get("page"),
                 "section": d.metadata.get("section"),
-                "content": d.page_content.strip()
+                "content": d.page_content.strip(),
+                "excerpt": d.page_content[:300].strip()
             })
 
         return {
@@ -126,6 +149,10 @@ class HRPolicyAssistant:
             "answer": answer,
             "sources": sources
         }
+
+
+# Alias for backwards compatibility
+HRPRAssistant = HRPolicyAssistant
 
 
 if __name__ == "__main__":
